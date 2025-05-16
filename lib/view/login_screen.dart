@@ -1,4 +1,7 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:news_hive/view/home_screen.dart';
 import 'package:news_hive/view/register_screen.dart';
 import 'package:news_hive/utils/helper.dart';
 import 'package:news_hive/widgets/auth_form_widget.dart';
@@ -58,6 +61,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 controller.value = 0.0;
                 await Future.delayed(const Duration(milliseconds: 500));
                 Navigator.of(context).pop();
+
+                // Pindah ke halaman HomeScreen
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HomeScreen()),
+                );
               });
 
               return Dialog(

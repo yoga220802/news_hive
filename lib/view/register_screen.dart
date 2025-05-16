@@ -1,5 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:news_hive/utils/helper.dart';
+import 'package:news_hive/view/home_screen.dart';
 import 'package:news_hive/widgets/auth_form_widget.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -43,7 +46,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
           Future.delayed(const Duration(seconds: 2), () async {
             controller.value = 0.0;
             await Future.delayed(const Duration(milliseconds: 500));
-            Navigator.of(context).pop();
+            Navigator.of(context).pop(); // Close the dialog
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => const HomeScreen()),
+            ); // Navigate to HomeScreen
           });
 
           return Dialog(
