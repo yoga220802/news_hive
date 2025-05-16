@@ -1,63 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:news_hive/view/register_screen.dart';
 import 'package:news_hive/view/utils/helper.dart';
 import 'package:news_hive/view/widgets/auth_form_widget.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool obscureText = true;
-  String? errorMessage;
-
-  final String dummyEmail = "udin@example.com";
-  final String dummyPassword = "1234";
-
-  bool isEmailInvalid = false;
-  bool isPasswordInvalid = false;
-
-  void handleLogin() {
-    final isValid = _formKey.currentState!.validate();
-
-    if (isValid) {
-      final email = emailController.text.trim();
-      final password = passwordController.text.trim();
-
-      setState(() {
-        if (email != dummyEmail || password != dummyPassword) {
-          errorMessage = "Invalid email or password.";
-          isEmailInvalid = true;
-          isPasswordInvalid = true;
-          _formKey.currentState!.validate(); // Trigger ulang validator
-        } else {
-          errorMessage = null;
-          isEmailInvalid = false;
-          isPasswordInvalid = false;
-
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor: cSuccess,
-              content: const Text("Login successful!"),
-              duration: const Duration(seconds: 3),
-            ),
-          );
-        }
-      });
-    }
-  }
 
   @override
   void dispose() {
+    nameController.dispose();
+    phoneController.dispose();
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
+  }
+
+  void handleRegister() {
+    if (_formKey.currentState!.validate()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: cSuccess,
+          content: const Text("Registration successful!"),
+          duration: const Duration(seconds: 3),
+        ),
+      );
+    }
   }
 
   @override
@@ -81,40 +59,51 @@ class _LoginScreenState extends State<LoginScreen> {
                           vsLarge,
                           SizedBox(
                             width: 150,
-                            height: 120,
-                            child: RichText(
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: 'Hello',
-                                    style: poppinsStyle(
-                                      fontSize: tsHeadLine1,
-                                      fontWeight: fSemiBold,
-                                      color: cBlack,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: ' Again!',
-                                    style: poppinsStyle(
-                                      fontSize: tsHeadLine1,
-                                      fontWeight: fSemiBold,
-                                      color: cPrimary,
-                                    ),
-                                  ),
-                                ],
+                            height: 60,
+                            child: Text(
+                              'Hello',
+                              style: poppinsStyle(
+                                fontSize: tsHeadLine1,
+                                fontWeight: fBold,
+                                color: cBlack,
                               ),
                             ),
                           ),
                           vsSmall,
                           Text(
-                            'Welcome back you\'ve been missed',
+                            'Signup to get started',
                             style: poppinsStyle(
                               fontSize: tsSubtitle2,
                               fontWeight: fRegular,
                               color: cTextBlue,
                             ),
                           ),
-                          vsXLarge,
+                          customvs(96),
+                          AuthFormWidget(
+                            label: 'Name',
+                            controller: nameController,
+                            hintText: 'Full Name',
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Name is required';
+                              }
+                              return null;
+                            },
+                          ),
+                          vsSmall,
+                          AuthFormWidget(
+                            label: 'Phone Number',
+                            controller: phoneController,
+                            hintText: 'Phone Number',
+                            keyboardType: TextInputType.phone,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Phone number is required';
+                              }
+                              return null;
+                            },
+                          ),
+                          vsSmall,
                           AuthFormWidget(
                             label: 'Email',
                             controller: emailController,
@@ -124,17 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               if (value == null || value.isEmpty) {
                                 return 'Email is required';
                               }
-                              if (isEmailInvalid) {
-                                return errorMessage;
-                              }
                               return null;
-                            },
-                            onChanged: (_) {
-                              if (isEmailInvalid) {
-                                setState(() {
-                                  isEmailInvalid = false;
-                                });
-                              }
                             },
                           ),
                           vsSmall,
@@ -143,22 +122,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             controller: passwordController,
                             hintText: 'Password',
                             obscureText: obscureText,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Password is required';
-                              }
-                              if (isPasswordInvalid) {
-                                return errorMessage;
-                              }
-                              return null;
-                            },
-                            onChanged: (_) {
-                              if (isPasswordInvalid) {
-                                setState(() {
-                                  isPasswordInvalid = false;
-                                });
-                              }
-                            },
                             suffixIcon: IconButton(
                               icon: Icon(
                                 obscureText
@@ -172,26 +135,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                 });
                               },
                             ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Password is required';
+                              }
+                              return null;
+                            },
                           ),
-                          vsMedium,
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: TextButton(
-                              onPressed: () => (),
-                              child: Text(
-                                'Forgot Password?',
-                                style: poppinsStyle(
-                                  fontSize: tsSubtitle2,
-                                  fontWeight: fRegular,
-                                  color: cError,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const Spacer(), // Mengisi ruang kosong antara form dan tombol
                           vsLarge,
                           ElevatedButton(
-                            onPressed: handleLogin,
+                            onPressed: handleRegister,
                             style: ElevatedButton.styleFrom(
                               backgroundColor: cPrimary,
                               shape: RoundedRectangleBorder(
@@ -200,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               minimumSize: const Size.fromHeight(50),
                             ),
                             child: Text(
-                              'Login',
+                              'Register',
                               style: poppinsStyle(
                                 fontSize: tsSubtitle1,
                                 fontWeight: fSemiBold,
@@ -213,7 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Don\'t have an account? ',
+                                'Already have an account? ',
                                 style: poppinsStyle(
                                   fontSize: tsSubtitle2,
                                   fontWeight: fRegular,
@@ -222,16 +175,13 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               TextButton(
                                 onPressed: () {
-                                  Navigator.push(
+                                  Navigator.pushReplacementNamed(
                                     context,
-                                    MaterialPageRoute(
-                                      builder:
-                                          (context) => const RegisterScreen(),
-                                    ),
+                                    '/login',
                                   );
                                 },
                                 child: Text(
-                                  'Sign Up',
+                                  'Login',
                                   style: poppinsStyle(
                                     fontSize: tsSubtitle2,
                                     fontWeight: fSemiBold,
