@@ -1,6 +1,6 @@
 // widgets/custom_input_field.dart
 import 'package:flutter/material.dart';
-import 'package:news_hive/view/utils/helper.dart';
+import 'package:news_hive/utils/helper.dart';
 
 class AuthFormWidget extends StatelessWidget {
   final String label;

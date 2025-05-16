@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_hive/view/introduction_screen.dart';
-import 'package:news_hive/view/utils/helper.dart';
+import 'package:news_hive/utils/helper.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

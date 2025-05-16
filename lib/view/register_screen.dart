@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:news_hive/view/utils/helper.dart';
-import 'package:news_hive/view/widgets/auth_form_widget.dart';
+import 'package:news_hive/utils/helper.dart';
+import 'package:news_hive/widgets/auth_form_widget.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
