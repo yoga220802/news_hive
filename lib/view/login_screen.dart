@@ -35,18 +35,72 @@ class _LoginScreenState extends State<LoginScreen> {
           errorMessage = "Invalid email or password.";
           isEmailInvalid = true;
           isPasswordInvalid = true;
-          _formKey.currentState!.validate(); // Trigger ulang validator
+          _formKey.currentState!.validate();
         } else {
           errorMessage = null;
           isEmailInvalid = false;
           isPasswordInvalid = false;
 
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor: cSuccess,
-              content: const Text("Login successful!"),
-              duration: const Duration(seconds: 3),
-            ),
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) {
+              double opacity = 0.0;
+              final controller = ValueNotifier<double>(0.0);
+
+              // Mulai fade in
+              Future.delayed(Duration.zero, () {
+                controller.value = 1.0;
+              });
+
+              // Setelah 2 detik, fade out dan tutup
+              Future.delayed(const Duration(seconds: 2), () async {
+                controller.value = 0.0;
+                await Future.delayed(const Duration(milliseconds: 500));
+                Navigator.of(context).pop();
+              });
+
+              return Dialog(
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                child: ValueListenableBuilder<double>(
+                  valueListenable: controller,
+                  builder: (context, val, child) {
+                    return AnimatedOpacity(
+                      opacity: val,
+                      duration: const Duration(milliseconds: 500),
+                      child: Container(
+                        padding: const EdgeInsets.all(24),
+                        decoration: BoxDecoration(
+                          color: cPrimary,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.check_circle_outline,
+                              size: 80,
+                              color: cWhite,
+                            ),
+                            vsMedium,
+                            Text(
+                              "Login Successful !",
+                              style: poppinsStyle(
+                                fontSize: tsSubtitle1,
+                                fontWeight: fBold,
+                                color: cTextWhite,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              );
+            },
           );
         }
       });

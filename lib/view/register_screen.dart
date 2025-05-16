@@ -28,12 +28,65 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   void handleRegister() {
     if (_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: cSuccess,
-          content: const Text("Registration successful!"),
-          duration: const Duration(seconds: 3),
-        ),
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          final controller = ValueNotifier<double>(0.0);
+
+          // Fade in
+          Future.delayed(Duration.zero, () {
+            controller.value = 1.0;
+          });
+
+          // Fade out setelah 2 detik
+          Future.delayed(const Duration(seconds: 2), () async {
+            controller.value = 0.0;
+            await Future.delayed(const Duration(milliseconds: 500));
+            Navigator.of(context).pop();
+          });
+
+          return Dialog(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            child: ValueListenableBuilder<double>(
+              valueListenable: controller,
+              builder: (context, val, child) {
+                return AnimatedOpacity(
+                  opacity: val,
+                  duration: const Duration(milliseconds: 500),
+                  child: Container(
+                    padding: const EdgeInsets.all(24),
+                    decoration: BoxDecoration(
+                      color: cPrimary,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.check_circle_outline,
+                          size: 80,
+                          color: cWhite,
+                        ),
+                        vsMedium,
+                        Text(
+                          "Sign Up Successful !",
+                          style: poppinsStyle(
+                            fontSize: tsSubtitle1,
+                            fontWeight: fBold,
+                            color: cTextWhite,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          );
+        },
       );
     }
   }
@@ -175,10 +228,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                               TextButton(
                                 onPressed: () {
-                                  Navigator.pushReplacementNamed(
-                                    context,
-                                    '/login',
-                                  );
+                                  Navigator.pop(context);
                                 },
                                 child: Text(
                                   'Login',
