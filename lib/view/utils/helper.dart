@@ -4,12 +4,13 @@ import 'package:google_fonts/google_fonts.dart';
 // Colors
 const Color cPrimary = Color.fromRGBO(45, 51, 107, 1);
 const Color cTextWhite = Color.fromRGBO(255, 255, 255, 1);
-const Color cTextBlue = Color.fromRGBO(42, 45, 147, 1);
+const Color cTextBlue = Color.fromRGBO(78, 75, 102, 1);
 const Color cLinear = Color.fromRGBO(169, 181, 223, 1);
 const Color cWhite = Color.fromRGBO(255, 255, 255, 1);
 const Color cBlack = Color.fromRGBO(36, 36, 36, 1);
 const Color cGrey = Color.fromRGBO(83, 83, 83, 1);
 const Color cError = Color.fromRGBO(255, 34, 34, 1);
+const Color cRequired = Color.fromRGBO(255, 69, 69, 1);
 const Color cSuccess = Color.fromRGBO(0, 85, 0, 1);
 
 // SizedBox
@@ -37,11 +38,12 @@ const Widget hsXLarge = SizedBox(width: 36);
 // Border
 OutlineInputBorder buildBorder({
   required Color color,
-  double borderRadius = 5,
+  double borderRadius = 6,
+  double borderWidth = 1,
 }) {
   return OutlineInputBorder(
     borderRadius: BorderRadius.circular(borderRadius),
-    borderSide: BorderSide(color: color),
+    borderSide: BorderSide(color: color, width: borderWidth),
   );
 }
 
