@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:news_hive/view/login.dart';
 import 'package:news_hive/view/utils/helper.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class IntroductionScreen extends StatefulWidget {
   const IntroductionScreen({super.key});
@@ -58,24 +60,119 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
                   child: Column(
                     children: [
                       Image.asset(pageList[index]['image'], height: 300),
-                      vsLarge,
+                      vsXLarge,
+                      Container(height: 2, color: cPrimary),
+                      vsMedium,
                       Text(
                         pageList[index]['title'],
-                        style: tsHeadLine3.copyWith(
-                          color: cPrimary,
+                        style: poppinsStyle(
+                          fontSize: tsHeadLine3,
                           fontWeight: fBold,
+                          color: cPrimary,
                         ),
                       ),
-                      vsLarge,
                       vsSmall,
                       Text(
                         pageList[index]['subTitle'],
-                        textAlign: TextAlign.center,
-                        style: tsSubtitle1.copyWith(
-                          color: cBlack,
+                        textAlign: TextAlign.start,
+                        style: poppinsStyle(
+                          fontSize: tsSubtitle1,
                           fontWeight: fRegular,
+                          color: cBlack,
                         ),
                       ),
+                      vsSmall,
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: SmoothPageIndicator(
+                          controller: _pageController,
+                          count: pageList.length,
+                          effect: ExpandingDotsEffect(
+                            activeDotColor: cPrimary,
+                            dotColor: cLinear,
+                            dotHeight: 15,
+                            dotWidth: 15,
+                            expansionFactor: 3,
+                          ),
+                        ),
+                      ),
+                      Spacer(),
+                      if (index == pageList.length - 1)
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: cPrimary,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            minimumSize: const Size(372, 50),
+                          ),
+                          onPressed: () {
+                            // Navigasi ke halaman LoginScreen
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LoginScreen(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            'Get Started',
+                            style: poppinsStyle(
+                              fontSize: tsSubtitle1,
+                              fontWeight: fSemiBold,
+                              color: cWhite,
+                            ),
+                          ),
+                        )
+                      else
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: cLinear,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                minimumSize: const Size(150, 50),
+                              ),
+                              onPressed: () {
+                                _pageController.jumpToPage(pageList.length - 1);
+                              },
+                              child: Text(
+                                'Skip',
+                                style: poppinsStyle(
+                                  fontSize: tsSubtitle1,
+                                  fontWeight: fSemiBold,
+                                  color: cPrimary,
+                                ),
+                              ),
+                            ),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: cPrimary,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                minimumSize: const Size(150, 50),
+                              ),
+                              onPressed: () {
+                                _pageController.nextPage(
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeIn,
+                                );
+                              },
+                              child: Text(
+                                'Next',
+                                style: poppinsStyle(
+                                  fontSize: tsSubtitle1,
+                                  fontWeight: fSemiBold,
+                                  color: cWhite,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                     ],
                   ),
                 );
