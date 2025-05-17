@@ -1,8 +1,7 @@
-// widgets/custom_input_field.dart
 import 'package:flutter/material.dart';
 import 'package:news_hive/utils/helper.dart';
 
-class AuthFormWidget extends StatelessWidget {
+class CustomFormWidget extends StatelessWidget {
   final String label;
   final TextEditingController controller;
   final String hintText;
@@ -12,7 +11,7 @@ class AuthFormWidget extends StatelessWidget {
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
 
-  const AuthFormWidget({
+  const CustomFormWidget({
     super.key,
     required this.label,
     required this.controller,

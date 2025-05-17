@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:news_hive/view/home_screen.dart';
 import 'package:news_hive/view/splash_screen.dart';
 import 'package:news_hive/utils/helper.dart';
 
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: cPrimary),
             useMaterial3: true,
           ),
-          home: SplashScreen(), // Replace with your actual splash screen widget
+          home: HomeScreen(),
         );
       },
     );

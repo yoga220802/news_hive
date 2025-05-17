@@ -107,7 +107,6 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
                             minimumSize: const Size(372, 50),
                           ),
                           onPressed: () {
-                            // Navigasi ke halaman LoginScreen
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(

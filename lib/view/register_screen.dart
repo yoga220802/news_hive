@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_hive/utils/helper.dart';
 import 'package:news_hive/view/home_screen.dart';
-import 'package:news_hive/widgets/auth_form_widget.dart';
+import 'package:news_hive/widgets/custom_form_widget.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -138,7 +138,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                           customvs(96),
-                          AuthFormWidget(
+                          CustomFormWidget(
                             label: 'Name',
                             controller: nameController,
                             hintText: 'Full Name',
@@ -150,7 +150,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             },
                           ),
                           vsSmall,
-                          AuthFormWidget(
+                          CustomFormWidget(
                             label: 'Phone Number',
                             controller: phoneController,
                             hintText: 'Phone Number',
@@ -163,7 +163,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             },
                           ),
                           vsSmall,
-                          AuthFormWidget(
+                          CustomFormWidget(
                             label: 'Email',
                             controller: emailController,
                             hintText: 'Email',
@@ -176,7 +176,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             },
                           ),
                           vsSmall,
-                          AuthFormWidget(
+                          CustomFormWidget(
                             label: 'Password',
                             controller: passwordController,
                             hintText: 'Password',
