@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:news_hive/utils/helper.dart';
-import 'package:news_hive/view/home_screen.dart';
+import 'package:news_hive/view/main_screen.dart';
 import 'package:news_hive/widgets/custom_form_widget.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -48,7 +48,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             await Future.delayed(const Duration(milliseconds: 500));
             Navigator.of(context).pop(); // Close the dialog
             Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
+              MaterialPageRoute(builder: (context) => const MainScreen()),
             ); // Navigate to HomeScreen
           });
 

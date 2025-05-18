@@ -1,7 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:news_hive/view/home_screen.dart';
+import 'package:news_hive/view/main_screen.dart';
 import 'package:news_hive/view/register_screen.dart';
 import 'package:news_hive/utils/helper.dart';
 import 'package:news_hive/widgets/custom_form_widget.dart';
@@ -48,7 +48,6 @@ class _LoginScreenState extends State<LoginScreen> {
             context: context,
             barrierDismissible: false,
             builder: (context) {
-              double opacity = 0.0;
               final controller = ValueNotifier<double>(0.0);
 
               // Mulai fade in
@@ -65,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 // Pindah ke halaman HomeScreen
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const HomeScreen()),
+                  MaterialPageRoute(builder: (context) => const MainScreen()),
                 );
               });
 
