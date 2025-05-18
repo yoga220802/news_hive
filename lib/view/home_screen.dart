@@ -10,23 +10,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _currentIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: Row(
-          children: [
-            Image.asset('assets/images/logo.png', height: 36),
-            hsTiny,
-            Image.asset('assets/images/News Hive.png', height: 24),
-          ],
-        ),
-      ),
+      backgroundColor: cWhite,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -91,9 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     enlargeCenterPage: true,
                                     enableInfiniteScroll: false,
                                     onPageChanged: (index, reason) {
-                                      setState(() {
-                                        _currentIndex = index;
-                                      });
+                                      setState(() {});
                                     },
                                   ),
                                   items:
@@ -270,24 +255,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        selectedItemColor: cPrimary,
-        unselectedItemColor: Colors.grey,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bookmark),
-            label: 'Bookmark',
-          ),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-        ],
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
       ),
     );
   }
