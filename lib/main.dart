@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:news_hive/view/bookmark_screen.dart';
-import 'package:news_hive/view/home_screen.dart';
-import 'package:news_hive/view/profile_screen.dart';
+import 'package:news_hive/view/main_screen.dart';
 import 'package:news_hive/view/splash_screen.dart';
 import 'package:news_hive/utils/helper.dart';
 
@@ -30,7 +28,7 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: cPrimary),
             useMaterial3: true,
           ),
-          home: ProfileScreen(),
+          home: MainScreen(),
         );
       },
     );
