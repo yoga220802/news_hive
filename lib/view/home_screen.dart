@@ -10,27 +10,31 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int _currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
         title: Row(
           children: [
             Image.asset('assets/images/logo.png', height: 36),
-            // hsSuperTiny,
+            hsTiny,
             Image.asset('assets/images/News Hive.png', height: 24),
           ],
         ),
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
-
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
-            // crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               vsSmall,
+              // Search bar
               TextFormField(
                 decoration: InputDecoration(
                   hintText: 'Search',
@@ -48,88 +52,108 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              vsSmall,
-              DefaultTabController(
-                length: 3,
-                child: Column(
-                  children: [
-                    TabBar(
-                      labelColor: cBlack,
-                      labelStyle: poppinsStyle(
-                        fontSize: tsSubtitle2,
-                        fontWeight: fSemiBold,
+              vsMedium,
+              // Tab Bar
+              Expanded(
+                child: DefaultTabController(
+                  length: 3,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TabBar(
+                        labelColor: cBlack,
+                        labelStyle: poppinsStyle(
+                          fontSize: tsSubtitle2,
+                          fontWeight: fSemiBold,
+                        ),
+                        unselectedLabelColor: Colors.grey,
+                        indicatorColor: Colors.black,
+                        indicatorSize: TabBarIndicatorSize.label,
+                        tabs: const [
+                          Tab(text: 'Headline'),
+                          Tab(text: 'Top Stories'),
+                          Tab(text: 'Similiar News'),
+                        ],
                       ),
-                      unselectedLabelColor: Colors.grey,
-                      indicatorColor: Colors.black,
-                      tabs: const [
-                        Tab(text: 'Headline'),
-                        Tab(text: 'Top Stories'),
-                        Tab(text: 'Similar News'),
-                      ],
-                    ),
-                    vsSmall,
-                    SizedBox(
-                      height: 300,
-                      child: TabBarView(
-                        children: [
-                          Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                      vsMedium,
+                      Expanded(
+                        child: TabBarView(
+                          children: [
+                            // Headline Tab
+                            Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                // Carousel - Fixed at top
                                 CarouselSlider(
                                   options: CarouselOptions(
                                     height: 150.0,
+                                    viewportFraction: 0.9,
+                                    enlargeCenterPage: true,
                                     enableInfiniteScroll: false,
-                                    aspectRatio: 16 / 9,
+                                    onPageChanged: (index, reason) {
+                                      setState(() {
+                                        _currentIndex = index;
+                                      });
+                                    },
                                   ),
                                   items:
                                       [
                                         {
                                           'imagePath':
                                               'assets/images/content1.png',
-                                          'title': 'Lorem Ipsum Sit Dolor',
+                                          'title': 'Lorem ipsum sit dolor',
                                         },
                                         {
                                           'imagePath':
                                               'assets/images/content2.png',
-                                          'title': 'Lorem Ipsum Sit Dolor',
+                                          'title': 'Lorem ipsum sit dolor',
                                         },
                                       ].map((item) {
                                         return Builder(
                                           builder: (BuildContext context) {
-                                            return Stack(
-                                              children: [
-                                                Container(
-                                                  width:
-                                                      MediaQuery.of(
-                                                        context,
-                                                      ).size.width,
-                                                  margin: EdgeInsets.symmetric(
-                                                    horizontal: 5.0,
+                                            return Container(
+                                              width:
+                                                  MediaQuery.of(
+                                                    context,
+                                                  ).size.width,
+                                              margin: EdgeInsets.symmetric(
+                                                horizontal: 5.0,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(12.0),
+                                                image: DecorationImage(
+                                                  image: AssetImage(
+                                                    item['imagePath']!,
                                                   ),
-                                                  decoration: BoxDecoration(
-                                                    image: DecorationImage(
-                                                      image: AssetImage(
-                                                        item['imagePath']!,
-                                                      ),
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                          8.0,
-                                                        ),
-                                                  ),
+                                                  fit: BoxFit.cover,
                                                 ),
-                                                Positioned(
-                                                  bottom: 7,
-                                                  left: 8,
-                                                  child: Container(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                          horizontal: 8.0,
-                                                          vertical: 4.0,
-                                                        ),
+                                              ),
+                                              child: Stack(
+                                                children: [
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                            12.0,
+                                                          ),
+                                                      gradient: LinearGradient(
+                                                        begin:
+                                                            Alignment.topCenter,
+                                                        end:
+                                                            Alignment
+                                                                .bottomCenter,
+                                                        colors: [
+                                                          Colors.transparent,
+                                                          Colors.black,
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Positioned(
+                                                    bottom: 16,
+                                                    left: 16,
+                                                    right: 16,
                                                     child: Text(
                                                       item['title']!,
                                                       style: poppinsStyle(
@@ -139,15 +163,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             );
                                           },
                                         );
                                       }).toList(),
                                 ),
                                 vsLarge,
-
+                                // All News Title - Fixed
                                 Text(
                                   'All News',
                                   style: poppinsStyle(
@@ -156,77 +180,91 @@ class _HomeScreenState extends State<HomeScreen> {
                                     color: cBlack,
                                   ),
                                 ),
+                                vsMedium,
+                                // News List - Only this section is scrollable
                                 Expanded(
-                                  child: SingleChildScrollView(
-                                    child: ConstrainedBox(
-                                      constraints: BoxConstraints(
-                                        minHeight:
-                                            MediaQuery.of(context).size.height,
-                                      ),
-                                      child: IntrinsicHeight(
-                                        child: Column(
+                                  child: ListView.builder(
+                                    itemCount: 10,
+                                    itemBuilder: (context, index) {
+                                      return Container(
+                                        margin: EdgeInsets.only(bottom: 16),
+                                        child: Row(
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: List.generate(
-                                            10,
-                                            (index) => Container(
-                                              width:
-                                                  MediaQuery.of(
-                                                    context,
-                                                  ).size.width,
-                                              height: 100,
-                                              margin:
-                                                  const EdgeInsets.symmetric(
-                                                    vertical: 8.0,
-                                                  ),
-                                              decoration: BoxDecoration(
-                                                color: cWhite,
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            // News Image
+                                            ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              child: Image.asset(
+                                                'assets/images/content.png',
+                                                width: 120,
+                                                height: 120,
+                                                fit: BoxFit.cover,
                                               ),
-                                              child: Row(
+                                            ),
+                                            hsMedium,
+                                            // News Details
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: [
-                                                  Image.asset(
-                                                    'assets/images/content.png',
-                                                    height: 100,
+                                                  Text(
+                                                    'Tesla stock jumps after',
+                                                    style: poppinsStyle(
+                                                      fontSize: tsSubtitle1,
+                                                      fontWeight: fSemiBold,
+                                                    ),
+                                                    maxLines: 2,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
                                                   ),
-                                                  Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        'Tesla stock jumps after',
-                                                      ),
-                                                      Text(
-                                                        'Business, Technology',
-                                                      ),
-                                                      Text('2020-12-01'),
-                                                    ],
+                                                  vsTiny,
+                                                  Text(
+                                                    'Business, Technology',
+                                                    style: poppinsStyle(
+                                                      fontSize: tsCaption,
+                                                      color: Colors.grey,
+                                                    ),
                                                   ),
-                                                  Icon(Icons.bookmark),
+                                                  vsTiny,
+                                                  Text(
+                                                    '2020-12-01',
+                                                    style: poppinsStyle(
+                                                      fontSize: tsCaption,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
                                                 ],
                                               ),
                                             ),
-                                          ),
+                                            // Bookmark Icon
+                                            IconButton(
+                                              icon: Icon(Icons.bookmark_border),
+                                              onPressed: () {},
+                                              color: Colors.grey,
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                    ),
+                                      );
+                                    },
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                          Center(child: Text('Isi Top Stories')),
-                          Center(child: Text('Isi Similar News')),
-                        ],
+                            // Top Stories Tab
+                            Center(child: Text('Top Stories Content')),
+                            // Similar News Tab
+                            Center(child: Text('Similar News Content')),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -234,6 +272,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        selectedItemColor: cPrimary,
+        unselectedItemColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
@@ -243,12 +284,9 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
         onTap: (index) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Selected index: $index'),
-              duration: Duration(seconds: 2),
-            ),
-          );
+          setState(() {
+            _currentIndex = index;
+          });
         },
       ),
     );
