@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:news_hive/utils/helper.dart';
+import 'package:news_hive/view/news_detail_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -169,71 +170,85 @@ class _HomeScreenState extends State<HomeScreen> {
                                 // News List - Only this section is scrollable
                                 Expanded(
                                   child: ListView.builder(
-                                    itemCount: 10,
+                                    itemCount: 30,
                                     itemBuilder: (context, index) {
-                                      return Container(
-                                        margin: EdgeInsets.only(bottom: 16),
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            // News Image
-                                            ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                              child: Image.asset(
-                                                'assets/images/content.png',
-                                                width: 120,
-                                                height: 120,
-                                                fit: BoxFit.cover,
+                                      return GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder:
+                                                  (context) =>
+                                                      const NewsDetailScreen(),
+                                            ),
+                                          );
+                                        },
+                                        child: Container(
+                                          margin: EdgeInsets.only(bottom: 16),
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              // News Image
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                                child: Image.asset(
+                                                  'assets/images/content.png',
+                                                  width: 120,
+                                                  height: 120,
+                                                  fit: BoxFit.cover,
+                                                ),
                                               ),
-                                            ),
-                                            hsMedium,
-                                            // News Details
-                                            Expanded(
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    'Tesla stock jumps after',
-                                                    style: poppinsStyle(
-                                                      fontSize: tsSubtitle1,
-                                                      fontWeight: fSemiBold,
+                                              hsMedium,
+                                              // News Details
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      'Tesla stock jumps after',
+                                                      style: poppinsStyle(
+                                                        fontSize: tsSubtitle1,
+                                                        fontWeight: fSemiBold,
+                                                      ),
+                                                      maxLines: 2,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
                                                     ),
-                                                    maxLines: 2,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                  ),
-                                                  vsTiny,
-                                                  Text(
-                                                    'Business, Technology',
-                                                    style: poppinsStyle(
-                                                      fontSize: tsCaption,
-                                                      color: Colors.grey,
+                                                    vsTiny,
+                                                    Text(
+                                                      'Business, Technology',
+                                                      style: poppinsStyle(
+                                                        fontSize: tsCaption,
+                                                        color: Colors.grey,
+                                                      ),
                                                     ),
-                                                  ),
-                                                  vsTiny,
-                                                  Text(
-                                                    '2020-12-01',
-                                                    style: poppinsStyle(
-                                                      fontSize: tsCaption,
-                                                      color: Colors.grey,
+                                                    vsTiny,
+                                                    Text(
+                                                      '2020-12-01',
+                                                      style: poppinsStyle(
+                                                        fontSize: tsCaption,
+                                                        color: Colors.grey,
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                            // Bookmark Icon
-                                            IconButton(
-                                              icon: Icon(Icons.bookmark_border),
-                                              onPressed: () {},
-                                              color: Colors.grey,
-                                            ),
-                                          ],
+                                              // Bookmark Icon
+                                              IconButton(
+                                                icon: Icon(
+                                                  Icons.bookmark_border,
+                                                ),
+                                                onPressed: () {},
+                                                color: Colors.grey,
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       );
                                     },

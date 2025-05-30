@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:news_hive/utils/helper.dart';
-import 'package:news_hive/view/bookmark_screen.dart';
-import 'package:news_hive/view/home_screen.dart';
-import 'package:news_hive/view/profile_screen.dart';
 
 class AppBottomNavigation extends StatefulWidget {
   final int currentIndex;
