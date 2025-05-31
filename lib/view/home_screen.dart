@@ -2,6 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:news_hive/utils/helper.dart';
 import 'package:news_hive/view/news_detail_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:news_hive/controllers/news_controller.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,7 +14,16 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await Provider.of<NewsController>(context, listen: false).fetchEverything(query: 'latest');
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final newsController = Provider.of<NewsController>(context);
     return Scaffold(
       backgroundColor: cWhite,
       body: SafeArea(
@@ -33,9 +44,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   suffixIcon: IconButton(
                     icon: const Icon(Icons.tune),
                     onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Tune Button Pressed')),
-                      );
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text('Tune Button Pressed')));
                     },
                   ),
                 ),
@@ -50,10 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       TabBar(
                         labelColor: cBlack,
-                        labelStyle: poppinsStyle(
-                          fontSize: tsSubtitle2,
-                          fontWeight: fSemiBold,
-                        ),
+                        labelStyle: poppinsStyle(fontSize: tsSubtitle2, fontWeight: fSemiBold),
                         unselectedLabelColor: Colors.grey,
                         indicatorColor: Colors.black,
                         indicatorSize: TabBarIndicatorSize.label,
@@ -85,33 +93,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                   items:
                                       [
                                         {
-                                          'imagePath':
-                                              'assets/images/content1.png',
+                                          'imagePath': 'assets/images/content1.png',
                                           'title': 'Lorem ipsum sit dolor',
                                         },
                                         {
-                                          'imagePath':
-                                              'assets/images/content2.png',
+                                          'imagePath': 'assets/images/content2.png',
                                           'title': 'Lorem ipsum sit dolor',
                                         },
                                       ].map((item) {
                                         return Builder(
                                           builder: (BuildContext context) {
                                             return Container(
-                                              width:
-                                                  MediaQuery.of(
-                                                    context,
-                                                  ).size.width,
-                                              margin: EdgeInsets.symmetric(
-                                                horizontal: 5.0,
-                                              ),
+                                              width: MediaQuery.of(context).size.width,
+                                              margin: EdgeInsets.symmetric(horizontal: 5.0),
                                               decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(12.0),
+                                                borderRadius: BorderRadius.circular(12.0),
                                                 image: DecorationImage(
-                                                  image: AssetImage(
-                                                    item['imagePath']!,
-                                                  ),
+                                                  image: AssetImage(item['imagePath']!),
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
@@ -119,20 +117,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 children: [
                                                   Container(
                                                     decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                            12.0,
-                                                          ),
+                                                      borderRadius: BorderRadius.circular(12.0),
                                                       gradient: LinearGradient(
-                                                        begin:
-                                                            Alignment.topCenter,
-                                                        end:
-                                                            Alignment
-                                                                .bottomCenter,
-                                                        colors: [
-                                                          Colors.transparent,
-                                                          Colors.black,
-                                                        ],
+                                                        begin: Alignment.topCenter,
+                                                        end: Alignment.bottomCenter,
+                                                        colors: [Colors.transparent, Colors.black],
                                                       ),
                                                     ),
                                                   ),
@@ -170,31 +159,29 @@ class _HomeScreenState extends State<HomeScreen> {
                                 // News List - Only this section is scrollable
                                 Expanded(
                                   child: ListView.builder(
-                                    itemCount: 30,
+                                    itemCount: newsController.newsModel?.articles?.length ?? 0,
                                     itemBuilder: (context, index) {
+                                      final article = newsController.newsModel!.articles![index];
                                       return GestureDetector(
                                         onTap: () {
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                              builder:
-                                                  (context) =>
-                                                      const NewsDetailScreen(),
+                                              builder: (context) => const NewsDetailScreen(),
                                             ),
                                           );
                                         },
                                         child: Container(
                                           margin: EdgeInsets.only(bottom: 16),
                                           child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               // News Image
                                               ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(12),
-                                                child: Image.asset(
-                                                  'assets/images/content.png',
+                                                borderRadius: BorderRadius.circular(12),
+                                                child: Image.network(
+                                                  article.urlToImage ??
+                                                      'https://via.placeholder.com/120',
                                                   width: 120,
                                                   height: 120,
                                                   fit: BoxFit.cover,
@@ -204,25 +191,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                               // News Details
                                               Expanded(
                                                 child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   children: [
                                                     Text(
-                                                      'Tesla stock jumps after',
+                                                      article.title ?? 'No Title',
                                                       style: poppinsStyle(
                                                         fontSize: tsSubtitle1,
                                                         fontWeight: fSemiBold,
                                                       ),
                                                       maxLines: 2,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
+                                                      overflow: TextOverflow.ellipsis,
                                                     ),
                                                     vsTiny,
                                                     Text(
-                                                      'Business, Technology',
+                                                      article.source?.name ?? 'Unknown Source',
                                                       style: poppinsStyle(
                                                         fontSize: tsCaption,
                                                         color: Colors.grey,
@@ -230,7 +213,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     ),
                                                     vsTiny,
                                                     Text(
-                                                      '2020-12-01',
+                                                      article.publishedAt?.split('T')[0] ??
+                                                          'Unknown Date',
                                                       style: poppinsStyle(
                                                         fontSize: tsCaption,
                                                         color: Colors.grey,
@@ -241,9 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                               // Bookmark Icon
                                               IconButton(
-                                                icon: Icon(
-                                                  Icons.bookmark_border,
-                                                ),
+                                                icon: Icon(Icons.bookmark_border),
                                                 onPressed: () {},
                                                 color: Colors.grey,
                                               ),

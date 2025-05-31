@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:news_hive/controllers/news_controller.dart';
 import 'package:news_hive/view/main_screen.dart';
 import 'package:news_hive/view/news_detail_screen.dart';
 import 'package:news_hive/view/splash_screen.dart';
 import 'package:news_hive/utils/helper.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => NewsController())],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -29,7 +36,7 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: cPrimary),
             useMaterial3: true,
           ),
-          home: SplashScreen(),
+          home: MainScreen(),
         );
       },
     );
