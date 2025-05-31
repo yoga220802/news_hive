@@ -30,20 +30,16 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                   suffixIcon: IconButton(
                     icon: const Icon(Icons.tune),
                     onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Tune Button Pressed')),
-                      );
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text('Tune Button Pressed')));
                     },
                   ),
                 ),
               ),
               Text(
                 'Saved Articles',
-                style: poppinsStyle(
-                  fontSize: tsSubtitle1,
-                  fontWeight: fSemiBold,
-                  color: cBlack,
-                ),
+                style: poppinsStyle(fontSize: tsSubtitle1, fontWeight: fSemiBold, color: cBlack),
               ),
               vsMedium,
               Expanded(
@@ -52,12 +48,12 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const NewsDetailScreen(),
-                          ),
-                        );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => const NewsDetailScreen(),
+                        //   ),
+                        // );
                       },
                       child: Container(
                         margin: EdgeInsets.only(bottom: 16),
@@ -77,8 +73,7 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     'Bookmarked Article ${index + 1}',
@@ -92,18 +87,12 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                                   vsTiny,
                                   Text(
                                     'Category',
-                                    style: poppinsStyle(
-                                      fontSize: tsCaption,
-                                      color: Colors.grey,
-                                    ),
+                                    style: poppinsStyle(fontSize: tsCaption, color: Colors.grey),
                                   ),
                                   vsTiny,
                                   Text(
                                     '2020-12-01',
-                                    style: poppinsStyle(
-                                      fontSize: tsCaption,
-                                      color: Colors.grey,
-                                    ),
+                                    style: poppinsStyle(fontSize: tsCaption, color: Colors.grey),
                                   ),
                                 ],
                               ),

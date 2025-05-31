@@ -1,6 +1,6 @@
 # Miscellaneous
 *.class
-<<<<<<< HEAD
+
 *.log
 *.pyc
 *.swp
@@ -44,7 +44,7 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-=======
+
 *.lock
 *.log
 *.pyc
@@ -162,4 +162,6 @@ app.*.symbols
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 !/dev/ci/**/Gemfile.lock
->>>>>>> f685b2b8eca4c296954decb0dbbfd47424b7f1eb
+
+# environment files
+.env
